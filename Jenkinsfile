@@ -39,7 +39,7 @@ stage('Trigger Child Job and Continue') {
         script {
             try {
                 def childJobResult = build job: 'testing/child-job',
-                                      wait: true,
+                                      wait: false,
                                       propagate: false
                 
                 echo "Child job '${childJobResult.fullDisplayName}' finished with status: ${childJobResult.result}"
