@@ -45,7 +45,7 @@ pipeline {
                 def downstreamStatus = downstreamBuild.result
                 def downstreamBuildNumber = downstreamBuild.number
                 
-                echo "Downstream job 'DownstreamJob' #${downstreamBuildNumber} completed with status: ${downstreamStatus}"
+                echo "Downstream job 'testing/childJob' #${downstreamBuildNumber} completed with status: ${downstreamStatus}"
 
                 if (downstreamStatus != 'SUCCESS') {
                     unstable "Automation job 'testing/childJob' #${downstreamBuildNumber} failed with status: ${downstreamStatus}"
