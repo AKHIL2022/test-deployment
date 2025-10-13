@@ -38,7 +38,7 @@ pipeline {
             steps {
                 script {
                     def childJobResult = build job: 'testing/child-job',
-                                          wait: true,
+                                          wait: false,
                                           propagate: true
                     echo "Child job '${childJobResult.fullDisplayName}' finished with status: ${childJobResult.result}"
                     if (childJobResult.result != 'SUCCESS') {
