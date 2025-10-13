@@ -37,7 +37,7 @@ pipeline {
     stage('Trigger Child Job and Wait') {
             steps {
                 script {
-                    def childJobResult = build job: '/testing/job/child-job/',
+                    def childJobResult = build job: '../testing/job/child-job/',
                                           wait: true,
                                           propagate: true
                     echo "Child job '${childJobResult.fullDisplayName}' finished with status: ${childJobResult.result}"
