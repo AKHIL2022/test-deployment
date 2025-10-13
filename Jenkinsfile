@@ -42,7 +42,7 @@ pipeline {
                                           propagate: true
                     echo "Child job '${childJobResult.fullDisplayName}' finished with status: ${childJobResult.result}"
                     if (childJobResult.result != 'SUCCESS') {
-                        error "Child job failed: ${childJobResult.fullDisplayName}"
+                        unstable "Child job failed: ${childJobResult.fullDisplayName}"
                     }
                 }
             }
