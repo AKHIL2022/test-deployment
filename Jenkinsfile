@@ -38,7 +38,7 @@ pipeline {
     post {
         success {
             script {
-                def testJobResult = build job: 'http://localhost:8080/job/Test/job/child-job', 
+                def testJobResult = build job: 'http://localhost:8084/job/Test/job/child-job', 
                                         propagate: false,
                                         wait: true
                 if (testJobResult.getResult() != 'SUCCESS') {
