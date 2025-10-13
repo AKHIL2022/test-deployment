@@ -34,16 +34,23 @@ pipeline {
                 }
             }
         }
-    }
-    post {
-        success {
-            script {
-                def testJobResult = build job: '/Test/job/child-job', 
-                                        propagate: false,
-                                        wait: true
-                if (testJobResult.getResult() != 'SUCCESS') {
-                    unstable('Test job failed')
+    stage('Trigger Child Job and Wait') {
+            steps {
+                script {
+                    def childJobResult = build job: '/Test/job/child-job',
+                                          wait: true,
+                                          propagate: true
+                    echo "Child job '${childJobResult.fullDisplayName}' finished with status: ${childJobResult.result}"
+                    if (childJobResult.result != 'SUCCESS') {
+                        error "Child job failed: ${childJobResult.fullDisplayName}"
+                    }
                 }
+            }
+        }
+
+        stage('Continue After Child Job') {
+            steps {
+                echo 'Child job completed, continuing with parent pipeline...'
             }
         }
     }
