@@ -38,7 +38,9 @@ stage('Trigger Child Job and Continue') {
     steps {
         script {
             build job: 'testing/child-job',
+                  parameters: [string(name: 'RUN_SCRIPT', value: 'robot --outputdir results tests/')],
                   wait: false,
+                  waitForStart: true,
                   propagate: false
             echo "Child job triggered: ${env.JENKINS_URL}job/testing/job/child-job/"
         }
