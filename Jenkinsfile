@@ -40,7 +40,7 @@ stage('Trigger Child Job and Continue') {
             build job: 'testing/child-job',
                   wait: false,
                   propagate: false
-            echo "${jenkinsUrl}"
+            echo "Jenkins Root URL: ${env.ROOT_URL}"
             def jenkinsUrl = env.JENKINS_URL ?: 'http://localhost:8080/'
             if (!jenkinsUrl.endsWith('/')) {
                 jenkinsUrl += '/'
