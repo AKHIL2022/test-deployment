@@ -5,13 +5,16 @@ pipeline {
         stage('Install') {
             steps {
                 script {
-                    echo 'Running dummy install step...'
-                    // Simulate npm install or any dependency installation
+                    echo 'Checking for HTML file...'
                     sh '''
-                        echo "Installing dependencies..."
-                        echo "npm install --save-dev some-package" > install.log
-                        sleep 2
-                        echo "Dependencies installed successfully."
+                        echo "Verifying test.html..."
+                        if [ -f test.html ]; then
+                            echo "Found test.html"
+                            cat test.html > install_output.txt
+                        else
+                            echo "test.html not found"
+                            exit 1
+                        fi
                     '''
                 }
             }
@@ -20,13 +23,13 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    echo 'Running dummy build step...'
-                    // Simulate a build process
+                    echo 'Processing HTML file...'
                     sh '''
-                        echo "Building project..."
-                        echo "npm run build" > build.log
-                        sleep 2
-                        echo "Build completed successfully."
+                        echo "Building from test.html..."
+                        cp test.html build_output.html
+                        echo "<!-- Built by Jenkins -->" >> build_output.html
+                        sleep 1
+                        echo "Build completed."
                     '''
                 }
             }
