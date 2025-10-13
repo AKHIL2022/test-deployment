@@ -37,13 +37,16 @@ pipeline {
 stage('Trigger Child Job and Continue') {
     steps {
         script {
-            def childJobResult = build job: 'testing/child-job',
-                                      wait: false,
-                                      propagate: false
-            def childJobUrl = childJobResult.getAbsoluteUrl()
-            echo "Child job triggered: ${childJobUrl}"
+            build job: 'testing/child-job',
+                  wait: false,
+                  propagate: false
+            def jenkinsUrl = env.JENKINS_URL ?: 'http://localhost:8080/'
+            if (!jenkinsUrl.endsWith('/')) {
+                jenkinsUrl += '/'
+            }
+            echo "Child job triggered: ${jenkinsUrl}job/testing/job/child-job/"
         }
     }
 }
-}
+    }
 }
