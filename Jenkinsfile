@@ -37,20 +37,14 @@ pipeline {
     }
 
     post {
-        always {
+        success {
             script {
-                echo 'Triggering e2e tests'
-                def downstreamBuild = build job: 'testing/childJob', wait: true, propagate: false
-                
-                def downstreamStatus = downstreamBuild.result
-                def downstreamBuildNumber = downstreamBuild.number
-                
-                echo "Downstream job 'testing/childJob' #${downstreamBuildNumber} completed with status: ${downstreamStatus}"
-
-                if (downstreamStatus != 'SUCCESS') {
-                    unstable "Automation job 'testing/childJob' #${downstreamBuildNumber} failed with status: ${downstreamStatus}"
+                def testJobResult = build job: 'testing/child-job', 
+                                        propagate: false,
+                                        wait: true
+                if (testJobResult.getResult() != 'SUCCESS') {
+                    unstable('Test job failed')
                 }
             }
         }
     }
-}
