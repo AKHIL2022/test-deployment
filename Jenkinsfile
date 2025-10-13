@@ -37,19 +37,13 @@ pipeline {
 stage('Trigger Child Job and Continue') {
     steps {
         script {
-            try {
-                def childJobResult = build job: 'testing/child-job',
+            def childJobResult = build job: 'testing/child-job',
                                       wait: false,
                                       propagate: false
-                def childJobUrl = childJobResult.getAbsoluteUrl()
-                echo "Child job triggered: ${childJobUrl}"
-                echo "Child job name: ${childJobResult.fullDisplayName}"
-            } catch (Exception e) {
-                echo "Error triggering child job: ${e.message}"
-                unstable("Failed to trigger child job: ${e.message}")
-            }
+            def childJobUrl = childJobResult.getAbsoluteUrl()
+            echo "Child job triggered: ${childJobUrl}"
         }
     }
 }
-    }
+}
 }
